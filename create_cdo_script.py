@@ -30,7 +30,9 @@ def write_cdo_script(settings, model, scenario):
     cmipfilesstring=" ".join(cmip_files)
 
     if len(cmip_files) == 0:
-        raise IOError("No files in", source_path, "or path not existent.")
+        text = "No files in "+source_path+" , or path not existent."
+        print(text)
+        raise IOError(text)
 
     # get z axis, assume they are consistent through files.
     ncf = nc.Dataset(os.path.join(source_path,cmip_files[0]), 'r')
@@ -38,7 +40,6 @@ def write_cdo_script(settings, model, scenario):
     ncf.close()
 
     zlevelstring = find_nearest(nc_zlevels, settings.depth_range_to_average)
-
 
     # make jinja aware of templates
     jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(
@@ -59,6 +60,7 @@ def write_cdo_script(settings, model, scenario):
 
     print fname, "written."
 
+    return fname
 
 if __name__ == "__main__":
 

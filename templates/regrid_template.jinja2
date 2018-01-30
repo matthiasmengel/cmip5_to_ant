@@ -9,12 +9,12 @@
 #SBATCH --output=log/cdo_{{runid}}.out
 #SBATCH --error=log/cdo_{{runid}}.err
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=1
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user={{user}}@pik-potsdam.de
 
 # same as cpus-per-task
-threads=8
+threads=1
 cdoc="srun -n $SLURM_NTASKS cdo -P $threads"
 # Bind your OpenMP threads
 export OMP_NUM_THREADS=$threads
