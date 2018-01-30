@@ -36,17 +36,19 @@ def find_nearest(array,range_to_average):
 
 zlevelstring = find_nearest(nc_zlevels, settings.depth_range_to_average)
 
-cmipfilesstring=",".join(cmip_files)
+cmipfilesstring=" ".join(cmip_files)
 
 template = jinja_env.get_template("regrid_template.jinja2")
 out = template.render(source_path=source_path,
                       target_path=target_path,
+                      target_grid=settings.target_grid,
                       zlevelstring=zlevelstring,
                       cmip_files=cmip_files,
                       cmipfilesstring=cmipfilesstring,
-                      runid=runid)
+                      runid=runid,
+                      cluster_regridding=settings.cluster_regridding)
 
-fname = "cdo_scripts/regrid.sh"
+fname = os.path.join("cdo_scripts","cdo_"+runid+".sh")
 with open(fname, 'w') as f: f.write(out)
 
 print fname, "written."

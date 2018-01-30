@@ -5,6 +5,11 @@ target_path = "/p/tmp/mengel/pycmip5/p002_testing/"
 
 gridfiles = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/"
 
+target_grid = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/initmip_8km.nc"
+
+# write additional info to .sh file, so it can be submitted to slurm cluster.
+cluster_regridding = True
+
 """ cmpip5 model, scenario and run choices """
 
 # models = [ 'ACCESS1-0','ACCESS1-3','bcc-csm1-1','bcc-csm1-1-m','BNU-ESM','CanESM2',
@@ -18,14 +23,15 @@ gridfiles = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/"
 models = ['HadGEM2-CC']
 
 #scenarios = ['piControl','historical','rcp85']
-scenarios = ['rcp45']#,'rcp45','rcp60']
+scenarios = ['rcp85']#,'rcp45','rcp60']
 run = "r1i1p1"
 
 variable = "thetao"
 time_res = "Omon"
 cmip5_runid = "r1i1p1"
 
-latitude_bounds = [-90,-60]
+# not needed in current implementation
+# latitude_bounds = [-90,-60]
 
 # in m, only relevant for 3d fields, in ascending order
 depth_range_to_average = [300, 1000]
