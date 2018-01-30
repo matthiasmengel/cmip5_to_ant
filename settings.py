@@ -1,14 +1,19 @@
 import os
+import pwd
+
 
 pcmdipath  = "/p/projects/ipcc_pcmdi/ipcc_ar5_pcmdi/pcmdi_data/"
 target_path = "/p/tmp/mengel/pycmip5/p002_testing/"
 
 gridfiles = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/"
 
-target_grid = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/initmip_8km.nc"
+grid_id = "initmip_4km"
+target_grid_folder = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/"
 
 # write additional info to .sh file, so it can be submitted to slurm cluster.
 cluster_regridding = True
+
+use_cdo_extrapolation = True
 
 """ cmpip5 model, scenario and run choices """
 
@@ -39,4 +44,6 @@ depth_range_to_average = [300, 1000]
 # regrid to that
 target_projection = ""
 
+# no edits below this line needed.
 project_root = os.path.dirname(os.path.abspath(__file__))
+user = pwd.getpwuid(os.getuid()).pw_name

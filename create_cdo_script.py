@@ -29,6 +29,9 @@ def write_cdo_script(settings, model, scenario):
     cmip_files = [os.path.basename(f) for f in cmip_files]
     cmipfilesstring=" ".join(cmip_files)
 
+    target_grid = os.path.join(settings.target_grid_folder, settings.grid_id+".nc")
+
+
     if len(cmip_files) == 0:
         text = "No files in "+source_path+" , or path not existent."
         print(text)
@@ -48,12 +51,15 @@ def write_cdo_script(settings, model, scenario):
     template = jinja_env.get_template("regrid_template.jinja2")
     out = template.render(source_path=source_path,
                           target_path=target_path,
-                          target_grid=settings.target_grid,
+                          target_grid=target_grid,
                           zlevelstring=zlevelstring,
                           cmip_files=cmip_files,
                           cmipfilesstring=cmipfilesstring,
                           runid=runid,
-                          cluster_regridding=settings.cluster_regridding)
+                          cluster_regridding=settings.cluster_regridding,
+                          grid_id = settings.grid_id,
+                          user=settings.user,
+                          use_cdo_extrapolation=settings.use_cdo_extrapolation)
 
     fname = os.path.join("cdo_scripts","cdo_"+runid+".sh")
     with open(fname, 'w') as f: f.write(out)

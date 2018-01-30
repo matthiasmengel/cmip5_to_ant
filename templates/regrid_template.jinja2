@@ -30,13 +30,15 @@ mkdir -vp {{target_path}}/vertmean
 mkdir -vp {{target_path}}/remap
 mkdir -vp {{target_path}}/concat
 
+{% if use_cdo_extrapolation %}
+export REMAP_EXTRAPOLATE=on
+{% endif %}
+
 ## loop area
-
-
 {% for file in cmip_files %}
 
-$cdoc sellevel,{{zlevelstring}} {{source_path}}/{{file}} {{target_path}}/sellevel/{{file}}
-$cdoc vertmean {{target_path}}/sellevel/{{file}} {{target_path}}/vertmean/{{file}}
+# $cdoc sellevel,{{zlevelstring}} {{source_path}}/{{file}} {{target_path}}/sellevel/{{file}}
+# $cdoc vertmean {{target_path}}/sellevel/{{file}} {{target_path}}/vertmean/{{file}}
 
 $cdoc -b F64 -f nc4c remapbil,{{target_grid}} {{target_path}}/vertmean/{{file}} {{target_path}}/remap/{{file}}
 
@@ -45,4 +47,4 @@ $cdoc -b F64 -f nc4c remapbil,{{target_grid}} {{target_path}}/vertmean/{{file}} 
 
 ## merge all files
 
-cd {{target_path}}/remap && $cdoc -b F64 -f nc4c mergetime {{cmipfilesstring}} {{target_path}}/concat/{{runid}}.nc
+cd {{target_path}}/remap && $cdoc -b F64 -f nc4c mergetime {{cmipfilesstring}} {{target_path}}/concat/{{runid}}_{{grid_id}}.nc
