@@ -20,10 +20,10 @@ cluster_regridding = True
 # 'MPI-ESM-MR','MPI-ESM-P','MRI-CGCM3','NorESM1-M','NorESM1-ME']
 
 #models = ['ACCESS1-0','ACCESS1-3']
-models = ['HadGEM2-CC']
+models = ['HadGEM2-ES']
 
 #scenarios = ['piControl','historical','rcp85']
-scenarios = ['rcp85']#,'rcp45','rcp60']
+scenarios = ['rcp26']#,'rcp45','rcp60']
 run = "r1i1p1"
 
 variable = "thetao"
