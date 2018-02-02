@@ -7,7 +7,7 @@ target_path = "/p/tmp/mengel/pycmip5/p002_testing/"
 
 gridfiles = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/"
 
-grid_id = "initmip16km"
+grid_id = "initmip4km"
 target_grid_folder = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/"
 
 # write additional info to .sh file, so it can be submitted to slurm cluster.
