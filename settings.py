@@ -7,7 +7,7 @@ target_path = "/p/tmp/mengel/pycmip5/p002_testing/"
 
 gridfiles = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/"
 
-grid_id = "initmip_4km"
+grid_id = "initmip16km"
 target_grid_folder = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/"
 
 # write additional info to .sh file, so it can be submitted to slurm cluster.
@@ -24,11 +24,12 @@ models = [ 'ACCESS1-0','ACCESS1-3','bcc-csm1-1','bcc-csm1-1-m','BNU-ESM','CanESM
 'IPSL-CM5B-LR','MIROC4h','MIROC5','MIROC-ESM','MIROC-ESM-CHEM','MPI-ESM-LR',
 'MPI-ESM-MR','MPI-ESM-P','MRI-CGCM3','NorESM1-M','NorESM1-ME']
 
-#models = ['ACCESS1-0','ACCESS1-3']
+models = ['GFDL-CM3','IPSL-CM5A-LR','CSIRO-Mk3-6-0']
 # models = ['CCSM4','CESM1-BGC','CESM1-CAM5','CESM1-FASTCHEM','CESM1-WACCM','CNRM-CM5']
 
-#scenarios = ['piControl','historical','rcp85']
-scenarios = ['rcp45','rcp45','rcp60','rcp85']
+scenarios = ['piControl','historical']
+# scenarios = ['rcp26','rcp45','rcp60','rcp85']
+scenarios = ['rcp85']
 run = "r1i1p1"
 
 variable = "thetao"
@@ -43,6 +44,12 @@ depth_range_to_average = [300, 1000]
 
 # regrid to that
 target_projection = ""
+
+# setting for creating ocean anomalies
+schmidtko_folder = "/p/projects/pism/mengel/pism_input/schmidtko/"
+schmidtko_file = os.path.join(schmidtko_folder,"schmidtko_"+grid_id.replace("_","")+"_means.nc")
+
+
 
 # no edits below this line needed.
 project_root = os.path.dirname(os.path.abspath(__file__))

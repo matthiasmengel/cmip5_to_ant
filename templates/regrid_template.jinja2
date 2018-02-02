@@ -15,11 +15,11 @@
 
 # same as cpus-per-task
 threads=1
-cdoc="srun -n $SLURM_NTASKS cdo -P $threads"
+cdoc="srun -n $SLURM_NTASKS cdo -P $threads -b F64 -f nc4c"
 # Bind your OpenMP threads
 export OMP_NUM_THREADS=$threads
 {% else %}
-cdoc=cdo
+cdoc="cdo -b F64 -f nc4c"
 {% endif %}
 
 
@@ -27,6 +27,7 @@ module load cdo
 
 mkdir -vp {{target_path}}/sellevel
 mkdir -vp {{target_path}}/vertmean
+mkdir -vp {{target_path}}/ymean
 mkdir -vp {{target_path}}/remap
 mkdir -vp {{target_path}}/concat
 
@@ -37,14 +38,15 @@ export REMAP_EXTRAPOLATE=on
 ## loop area
 {% for file in cmip_files %}
 
+>&2 echo "-------- {{file}}"
 # $cdoc sellevel,{{zlevelstring}} {{source_path}}/{{file}} {{target_path}}/sellevel/{{file}}
 # $cdoc vertmean {{target_path}}/sellevel/{{file}} {{target_path}}/vertmean/{{file}}
 
-$cdoc -b F64 -f nc4c remapbil,{{target_grid}} {{target_path}}/vertmean/{{file}} {{target_path}}/remap/{{file}}
-
+# $cdoc yearmean {{target_path}}/vertmean/{{file}} {{target_path}}/ymean/{{file}}
+$cdoc remapbil,{{target_grid}} {{target_path}}/ymean/{{file}} {{target_path}}/remap/{{file}}
 {% endfor %}
 
 
 ## merge all files
 
-cd {{target_path}}/remap && $cdoc -b F64 -f nc4c mergetime {{cmipfilesstring}} {{target_path}}/concat/{{runid}}_{{grid_id}}.nc
+cd {{target_path}}/remap && $cdoc -O mergetime {{cmipfilesstring}} {{target_path}}/concat/{{runid}}_{{grid_id}}.nc
