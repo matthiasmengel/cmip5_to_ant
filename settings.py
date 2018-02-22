@@ -29,7 +29,7 @@ models = ['GFDL-CM3','IPSL-CM5A-LR','CSIRO-Mk3-6-0']
 
 scenarios = ['piControl','historical']
 # scenarios = ['rcp26','rcp45','rcp60','rcp85']
-scenarios = ['rcp85']
+scenarios = ['rcp26']
 run = "r1i1p1"
 
 variable = "thetao"
