@@ -24,12 +24,16 @@ models = [ 'ACCESS1-0','ACCESS1-3','bcc-csm1-1','bcc-csm1-1-m','BNU-ESM','CanESM
 'IPSL-CM5B-LR','MIROC4h','MIROC5','MIROC-ESM','MIROC-ESM-CHEM','MPI-ESM-LR',
 'MPI-ESM-MR','MPI-ESM-P','MRI-CGCM3','NorESM1-M','NorESM1-ME']
 
-models = ['GFDL-CM3','IPSL-CM5A-LR','CSIRO-Mk3-6-0']
+models = ['IPSL-CM5A-LR','CSIRO-Mk3-6-0','GFDL-CM3']
 # models = ['CCSM4','CESM1-BGC','CESM1-CAM5','CESM1-FASTCHEM','CESM1-WACCM','CNRM-CM5']
 
 scenarios = ['piControl','historical']
 # scenarios = ['rcp26','rcp45','rcp60','rcp85']
 scenarios = ['rcp26']
+
+# use this option with create_cdo_mergescen.py
+scenarios_to_merge = ['historical','rcp26']
+
 run = "r1i1p1"
 
 variable = "thetao"

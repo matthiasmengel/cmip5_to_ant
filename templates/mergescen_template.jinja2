@@ -1,0 +1,33 @@
+#!/bin/bash
+
+{% if cluster_regridding %}
+# This script is specific for the PIK cluster, which uses SLURM for job scheduling.
+# and the module system.
+#SBATCH --qos=short
+#SBATCH --job-name=cdo_regrid_{{runid}}
+#SBATCH --account=ice
+#SBATCH --output=log/cdo_{{runid}}.out
+#SBATCH --error=log/cdo_{{runid}}.err
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user={{user}}@pik-potsdam.de
+
+# same as cpus-per-task
+threads=1
+cdoc="srun -n $SLURM_NTASKS cdo -P $threads -b F64 -f nc4c"
+# Bind your OpenMP threads
+export OMP_NUM_THREADS=$threads
+{% else %}
+cdoc="cdo -b F64 -f nc4c"
+{% endif %}
+
+
+module load cdo
+
+mkdir -vp {{target_path}}/concat
+
+## merge all files
+$cdoc -O mergetime {{source_paths_to_merge}} {{target_path}}/concat/{{merged_file}}
+
+
