@@ -1,7 +1,6 @@
 import os
 import pwd
 
-
 pcmdipath  = "/p/projects/ipcc_pcmdi/ipcc_ar5_pcmdi/pcmdi_data/"
 target_path = "/p/tmp/mengel/pycmip5/p002_testing/"
 
@@ -9,6 +8,12 @@ gridfiles = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/"
 
 grid_id = "initmip4km"
 target_grid_folder = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/"
+
+# if preprocessing is done, you can merge different scenarios
+# with this option
+only_merge_scenarios = False
+# use this option with create_cdo_mergescen.py
+scenarios_to_merge = ['historical','rcp26']
 
 # write additional info to .sh file, so it can be submitted to slurm cluster.
 cluster_regridding = True
@@ -31,11 +36,6 @@ scenarios = ['piControl','historical']
 # scenarios = ['rcp26','rcp45','rcp60','rcp85']
 scenarios = ['rcp26']
 
-# use this option with create_cdo_mergescen.py
-scenarios_to_merge = ['historical','rcp26']
-
-run = "r1i1p1"
-
 variable = "thetao"
 time_res = "Omon"
 cmip5_runid = "r1i1p1"
@@ -46,14 +46,9 @@ cmip5_runid = "r1i1p1"
 # in m, only relevant for 3d fields, in ascending order
 depth_range_to_average = [300, 1000]
 
-# regrid to that
-target_projection = ""
-
 # setting for creating ocean anomalies
 schmidtko_folder = "/p/projects/pism/mengel/pism_input/schmidtko/"
 schmidtko_file = os.path.join(schmidtko_folder,"schmidtko_"+grid_id.replace("_","")+"_means.nc")
-
-
 
 # no edits below this line needed.
 project_root = os.path.dirname(os.path.abspath(__file__))
