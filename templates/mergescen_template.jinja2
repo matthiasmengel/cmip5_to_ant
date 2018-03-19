@@ -25,9 +25,7 @@ cdoc="cdo -b F64 -f nc4c"
 
 module load cdo
 
-mkdir -vp {{target_path}}/concat
+mkdir -vp {{target_path}}
 
 ## merge all files
-$cdoc -O mergetime {{source_paths_to_merge}} {{target_path}}/concat/{{merged_file}}
-
-
+$cdoc -O mergetime {{source_paths_to_merge}} {{target_file}}

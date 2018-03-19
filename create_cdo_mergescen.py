@@ -18,13 +18,16 @@ def write_cdo_script(settings, model):
             model,scenario,settings.cmip5_runid])
 
         source_paths_to_merge.append(
-            os.path.join(settings.target_path, runid, "concat",
-            runid+"_"+settings.grid_id+".nc"))
+            os.path.join(settings.target_path, runid, settings.datafolder_to_merge,
+            runid+"_"+settings.file_identifier+".nc"))
 
     merged_scens = "+".join(settings.scenarios_to_merge)
     merged_runid = "_".join([settings.variable,settings.time_res,
             model,merged_scens,settings.cmip5_runid])
-    target_path = os.path.join(settings.target_path, merged_runid)
+    target_path = os.path.join(settings.target_path, merged_runid,
+                    settings.datafolder_to_merge)
+    target_file = os.path.join(target_path,
+                    merged_runid+"_"+settings.file_identifier+".nc")
 
     # make jinja aware of templates
     jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(
@@ -33,7 +36,7 @@ def write_cdo_script(settings, model):
     template = jinja_env.get_template("mergescen_template.jinja2")
 
     out = template.render(source_paths_to_merge=" ".join(source_paths_to_merge),
-                          merged_file=merged_runid+"_"+settings.grid_id+".nc",
+                          target_file=target_file,
                           target_path=target_path)
 
     fname = os.path.join("cdo_scripts","cdo_"+merged_runid+".sh")

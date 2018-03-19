@@ -2,22 +2,20 @@ import os
 import pwd
 
 pcmdipath  = "/p/projects/ipcc_pcmdi/ipcc_ar5_pcmdi/pcmdi_data/"
-target_path = "/p/tmp/mengel/pycmip5/p002_testing/"
-
-gridfiles = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/"
-
-grid_id = "initmip4km"
+target_path = "/p/tmp/mengel/pycmip5/p003_testing/"
 target_grid_folder = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/"
 
-# if preprocessing is done, you can merge different scenarios
-# with this option
+grid_id = "initmip4km"
+
+# if preprocessing is done, you can merge different scenarios with this option
 only_merge_scenarios = False
 # use this option with create_cdo_mergescen.py
 scenarios_to_merge = ['historical','rcp26']
+datafolder_to_merge = "schmidtko_anomaly"
+file_identifier = "initmip4km_band"
 
 # write additional info to .sh file, so it can be submitted to slurm cluster.
 cluster_regridding = True
-
 use_cdo_extrapolation = True
 
 """ cmpip5 model, scenario and run choices """
@@ -32,23 +30,15 @@ models = [ 'ACCESS1-0','ACCESS1-3','bcc-csm1-1','bcc-csm1-1-m','BNU-ESM','CanESM
 models = ['IPSL-CM5A-LR','CSIRO-Mk3-6-0','GFDL-CM3']
 # models = ['CCSM4','CESM1-BGC','CESM1-CAM5','CESM1-FASTCHEM','CESM1-WACCM','CNRM-CM5']
 
-scenarios = ['piControl','historical']
-# scenarios = ['rcp26','rcp45','rcp60','rcp85']
+scenarios = ['piControl','historical','rcp26','rcp45','rcp60','rcp85']
 scenarios = ['rcp26']
 
 variable = "thetao"
 time_res = "Omon"
 cmip5_runid = "r1i1p1"
 
-# not needed in current implementation
-# latitude_bounds = [-90,-60]
-
 # in m, only relevant for 3d fields, in ascending order
 depth_range_to_average = [300, 1000]
-
-# setting for creating ocean anomalies
-schmidtko_folder = "/p/projects/pism/mengel/pism_input/schmidtko/"
-schmidtko_file = os.path.join(schmidtko_folder,"schmidtko_"+grid_id.replace("_","")+"_means.nc")
 
 # no edits below this line needed.
 project_root = os.path.dirname(os.path.abspath(__file__))
