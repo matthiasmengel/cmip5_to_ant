@@ -19,7 +19,7 @@ cdoc="srun -n $SLURM_NTASKS cdo -P $threads -b F64 -f nc4c"
 # Bind your OpenMP threads
 export OMP_NUM_THREADS=$threads
 {% else %}
-cdoc="cdo -b F64 -f nc4c"
+cdoc="cdo -b F64 -f nc4c -z zip"
 {% endif %}
 
 
@@ -37,12 +37,11 @@ export REMAP_EXTRAPOLATE=on
 
 ## loop area
 {% for file in cmip_files %}
-
 >&2 echo "-------- {{file}}"
-# $cdoc sellevel,{{zlevelstring}} {{source_path}}/{{file}} {{target_path}}/sellevel/{{file}}
-# $cdoc vertmean {{target_path}}/sellevel/{{file}} {{target_path}}/vertmean/{{file}}
+$cdoc sellevel,{{zlevelstring}} {{source_path}}/{{file}} {{target_path}}/sellevel/{{file}}
+$cdoc vertmean {{target_path}}/sellevel/{{file}} {{target_path}}/vertmean/{{file}}
 
-# $cdoc yearmean {{target_path}}/vertmean/{{file}} {{target_path}}/ymean/{{file}}
+$cdoc yearmean {{target_path}}/vertmean/{{file}} {{target_path}}/ymean/{{file}}
 $cdoc remapbil,{{target_grid}} {{target_path}}/ymean/{{file}} {{target_path}}/remap/{{file}}
 {% endfor %}
 
@@ -50,3 +49,10 @@ $cdoc remapbil,{{target_grid}} {{target_path}}/ymean/{{file}} {{target_path}}/re
 ## merge all files
 
 cd {{target_path}}/remap && $cdoc -O mergetime {{cmipfilesstring}} {{target_path}}/concat/{{runid}}_{{grid_id}}.nc
+
+## change time units to seconds since
+
+cd {{target_path}}/concat/
+mv {{runid}}_{{grid_id}}.nc temp.nc
+$cdoc -O setreftime,0001-01-01,0,1s temp.nc {{runid}}_{{grid_id}}.nc
+rm temp.nc
