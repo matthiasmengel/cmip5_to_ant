@@ -8,11 +8,11 @@ target_grid_folder = "/p/projects/pism/mengel/pism_input/cdo_remapgrids/"
 grid_id = "initmip4km"
 
 # if preprocessing is done, you can merge different scenarios with this option
-only_merge_scenarios = False
+only_merge_scenarios = True
 # use this option with create_cdo_mergescen.py
 scenarios_to_merge = ['historical','rcp26']
-datafolder_to_merge = "schmidtko_anomaly"
-file_identifier = "initmip4km_band"
+datafolder_to_merge = "concat"
+file_identifier = "initmip4km"
 
 # write additional info to .sh file, so it can be submitted to slurm cluster.
 cluster_regridding = True
@@ -31,14 +31,14 @@ models = ['IPSL-CM5A-LR','CSIRO-Mk3-6-0','GFDL-CM3']
 # models = ['CCSM4','CESM1-BGC','CESM1-CAM5','CESM1-FASTCHEM','CESM1-WACCM','CNRM-CM5']
 
 scenarios = ['piControl','historical','rcp26','rcp45','rcp60','rcp85']
-scenarios = ['rcp26']
+scenarios = ['rcp26']#,'historical']
 
 variable = "thetao"
 time_res = "Omon"
 cmip5_runid = "r1i1p1"
 
 # in m, only relevant for 3d fields, in ascending order
-depth_range_to_average = [300, 1000]
+depth_range_to_average = [400, 800]
 
 # no edits below this line needed.
 project_root = os.path.dirname(os.path.abspath(__file__))

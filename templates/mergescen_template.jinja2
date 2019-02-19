@@ -4,7 +4,7 @@
 # This script is specific for the PIK cluster, which uses SLURM for job scheduling.
 # and the module system.
 #SBATCH --qos=short
-#SBATCH --job-name=cdo_regrid_{{runid}}
+#SBATCH --job-name=merge_{{runid}}
 #SBATCH --account=ice
 #SBATCH --output=log/cdo_{{runid}}.out
 #SBATCH --error=log/cdo_{{runid}}.err
@@ -19,7 +19,7 @@ cdoc="srun -n $SLURM_NTASKS cdo -P $threads -b F64 -f nc4c"
 # Bind your OpenMP threads
 export OMP_NUM_THREADS=$threads
 {% else %}
-cdoc="cdo -b F64 -f nc4c"
+cdoc="cdo -b F64 -f nc4c -z zip"
 {% endif %}
 
 

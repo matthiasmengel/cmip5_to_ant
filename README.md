@@ -6,7 +6,7 @@ This package helps to process cmip5 files and makes them usable for PISM.
 * average over a certain depth or height range.
 * create yearly averages
 * merge files for a certaion [model,scenario,runid] into one file along time. This is useful for 3D fields mainly.
-
+* merge two scenarios (for example historical and rcp85)
 
 ### Usage
 
@@ -21,6 +21,7 @@ This package helps to process cmip5 files and makes them usable for PISM.
 
 * submit to cluster using ```submit_cdo_sripts.sh```.
 
+* you can merge scenarios after the steps above are finished. Test with `python create_cdo_mergescen.py` and create a set of scripts to submit with `only_merge_scenarios = True` and ```python create_set_of_scripts.py```.
 
 ### TODO
 
