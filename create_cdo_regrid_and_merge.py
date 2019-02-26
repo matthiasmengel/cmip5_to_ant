@@ -37,12 +37,16 @@ def write_cdo_script(settings, model, scenario):
         print(text)
         raise IOError(text)
 
-    # get z axis, assume they are consistent through files.
-    ncf = nc.Dataset(os.path.join(source_path,cmip_files[0]), 'r')
-    nc_zlevels = ncf.variables['lev'][:]
-    ncf.close()
+    try:
+        # get z axis, assume they are consistent through files.
+        ncf = nc.Dataset(os.path.join(source_path,cmip_files[0]), 'r')
+        nc_zlevels = ncf.variables['lev'][:]
+        ncf.close()
 
-    zlevelstring = find_nearest(nc_zlevels, settings.depth_range_to_average)
+        zlevelstring = find_nearest(nc_zlevels, settings.depth_range_to_average)
+    except KeyError:
+        # for files without z levels
+        zlevelstring = ""
 
     # make jinja aware of templates
     jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(

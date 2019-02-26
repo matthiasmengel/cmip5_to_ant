@@ -25,8 +25,10 @@ cdoc="cdo -b F64 -f nc4c -z zip"
 
 module load cdo
 
+{% if zlevelstring != "" %}
 mkdir -vp {{target_path}}/sellevel
 mkdir -vp {{target_path}}/vertmean
+{% endif %}
 mkdir -vp {{target_path}}/ymean
 mkdir -vp {{target_path}}/remap
 mkdir -vp {{target_path}}/concat
@@ -38,10 +40,14 @@ export REMAP_EXTRAPOLATE=on
 ## loop area
 {% for file in cmip_files %}
 >&2 echo "-------- {{file}}"
+
+{% if zlevelstring == "" %}
+$cdoc yearmean  {{source_path}}/{{file}} {{target_path}}/ymean/{{file}}
+{% else %}
 $cdoc sellevel,{{zlevelstring}} {{source_path}}/{{file}} {{target_path}}/sellevel/{{file}}
 $cdoc vertmean {{target_path}}/sellevel/{{file}} {{target_path}}/vertmean/{{file}}
-
 $cdoc yearmean {{target_path}}/vertmean/{{file}} {{target_path}}/ymean/{{file}}
+{% endif %}
 $cdoc remapbil,{{target_grid}} {{target_path}}/ymean/{{file}} {{target_path}}/remap/{{file}}
 {% endfor %}
 
